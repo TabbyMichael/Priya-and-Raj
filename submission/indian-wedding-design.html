@@ -1,0 +1,1871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Priya & Raj - Indian Wedding Invitation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #8B0000; /* Deep Maroon */
+            --secondary-color: #D4AF37; /* Gold */
+            --accent-color: #008080; /* Peacock Blue */
+            --light-color: #FEFDFC; /* Ivory */
+            --dark-color: #333333;
+            --light-gray: #f9f9f9;
+            --dark-bg: #222;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+            display: none; /* Hidden by default for loading animation */
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-color);
+            line-height: 1.3;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Loading Animation */
+        #loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease-out;
+        }
+        
+        .heart-loader {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            transform: rotate(45deg);
+        }
+        
+        .heart-loader:before,
+        .heart-loader:after {
+            content: "";
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: var(--secondary-color);
+            border-radius: 50%;
+        }
+        
+        .heart-loader:before {
+            top: -50px;
+            left: 0;
+        }
+        
+        .heart-loader:after {
+            top: 0;
+            left: 50px;
+        }
+        
+        .heart-loader-inner {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100px;
+            height: 100px;
+            background: var(--secondary-color);
+            transform: rotate(-45deg);
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: rotate(-45deg) scale(1); }
+            50% { transform: rotate(-45deg) scale(1.1); }
+            100% { transform: rotate(-45deg) scale(1); }
+        }
+        
+        .loading-text {
+            position: absolute;
+            bottom: -60px;
+            width: 100%;
+            text-align: center;
+            color: white;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+        }
+        
+        /* Carousel Styles */
+        .carousel {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .carousel-inner {
+            display: flex;
+            width: 500%; /* 5 images * 100% */
+            height: 100%;
+        }
+        
+        .carousel-item {
+            width: 20%; /* 100% / 5 */
+            height: 100%;
+            position: relative;
+        }
+        
+        .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .carousel-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+        
+        .carousel-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+        
+        .carousel-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .carousel-indicator.active {
+            background: white;
+        }
+        
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .carousel-btn:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+        
+        .carousel-btn.prev {
+            left: 20px;
+        }
+        
+        .carousel-btn.next {
+            right: 20px;
+        }
+        
+        /* Header Styles */
+        .wedding-hero {
+            color: white;
+            text-align: center;
+            position: relative;
+            opacity: 0;
+            animation: fadeIn 1s ease-out forwards;
+        }
+        
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        
+        .couple-names {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            letter-spacing: 3px;
+            font-weight: 700;
+            opacity: 0;
+            animation: slideUp 1s ease-out 0.5s forwards;
+        }
+        
+        .wedding-date {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            font-weight: 300;
+            opacity: 0;
+            animation: slideUp 1s ease-out 0.7s forwards;
+        }
+        
+        .invitation-text {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            opacity: 0;
+            animation: slideUp 1s ease-out 0.9s forwards;
+        }
+        
+        .scroll-down {
+            margin-top: 40px;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 1.2s forwards;
+        }
+        
+        .scroll-down a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            display: inline-block;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-20px);}
+            60% {transform: translateY(-10px);}
+        }
+        
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Section Styles */
+        .wedding-section {
+            padding: 100px 0;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .wedding-section.animated {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+            font-size: 2.5rem;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .section-title.animated {
+            animation: fadeInUp 0.6s ease-out 0.2s forwards;
+        }
+        
+        .section-intro {
+            text-align: center;
+            max-width: 700px;
+            margin: -30px auto 50px;
+            font-size: 1.1rem;
+            color: #666;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .section-intro.animated {
+            animation: fadeInUp 0.6s ease-out 0.3s forwards;
+        }
+        
+        /* Events Section */
+        .events-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .event-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 30px;
+            transition: all 0.3s ease;
+            border-top: 5px solid var(--secondary-color);
+            position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .event-card.animated {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+        
+        .event-card:nth-child(1) { animation-delay: 0.1s; }
+        .event-card:nth-child(2) { animation-delay: 0.3s; }
+        .event-card:nth-child(3) { animation-delay: 0.5s; }
+        .event-card:nth-child(4) { animation-delay: 0.7s; }
+        .event-card:nth-child(5) { animation-delay: 0.9s; }
+        .event-card:nth-child(6) { animation-delay: 1.1s; }
+        
+        .event-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .event-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .event-name {
+            color: var(--primary-color);
+            margin-bottom: 0;
+            font-size: 1.8rem;
+        }
+        
+        .event-icon {
+            font-size: 2rem;
+        }
+        
+        .event-image {
+            width: 100%;
+            height: 150px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            object-fit: cover;
+            opacity: 0;
+        }
+        
+        .event-image.animated {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        
+        .event-details {
+            margin: 25px 0;
+        }
+        
+        .event-details p {
+            margin-bottom: 10px;
+        }
+        
+        .rsvp-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: block;
+            width: 100%;
+            font-size: 1.1rem;
+        }
+        
+        .rsvp-btn:hover {
+            background: var(--accent-color);
+            transform: scale(1.02);
+        }
+        
+        /* Venue Tabs */
+        .venue-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .tab-btn {
+            background: none;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 12px 25px;
+            margin: 5px;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(15px);
+        }
+        
+        .tab-btn.animated {
+            animation: fadeInUp 0.4s ease-out forwards;
+        }
+        
+        .tab-btn:nth-child(1) { animation-delay: 0.1s; }
+        .tab-btn:nth-child(2) { animation-delay: 0.2s; }
+        .tab-btn:nth-child(3) { animation-delay: 0.3s; }
+        .tab-btn:nth-child(4) { animation-delay: 0.4s; }
+        
+        .tab-btn.active,
+        .tab-btn:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+            opacity: 0;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        
+        .venue-details {
+            text-align: center;
+        }
+        
+        .map-placeholder {
+            height: 300px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 20px 0;
+            opacity: 0;
+        }
+        
+        .map-placeholder.animated {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        
+        .map-placeholder iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .venue-info {
+            text-align: left;
+            max-width: 500px;
+            margin: 20px auto 0;
+            opacity: 0;
+        }
+        
+        .venue-info.animated {
+            animation: fadeInUp 0.5s ease-out 0.2s forwards;
+        }
+        
+        .venue-info p {
+            margin-bottom: 10px;
+        }
+        
+        /* Rituals Timeline */
+        .rituals-timeline {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .rituals-timeline:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--secondary-color);
+            left: 50%;
+            margin-left: -2px;
+            transform: scaleY(0);
+            transform-origin: top;
+        }
+        
+        .rituals-timeline.animated:before {
+            animation: growLine 2s ease-out forwards;
+        }
+        
+        @keyframes growLine {
+            to { transform: scaleY(1); }
+        }
+        
+        .ritual-item {
+            margin-bottom: 50px;
+            position: relative;
+            width: 100%;
+            opacity: 0;
+        }
+        
+        .ritual-item.animated {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        
+        .ritual-item:nth-child(1) { animation-delay: 0.5s; }
+        .ritual-item:nth-child(2) { animation-delay: 0.8s; }
+        .ritual-item:nth-child(3) { animation-delay: 1.1s; }
+        .ritual-item:nth-child(4) { animation-delay: 1.4s; }
+        .ritual-item:nth-child(5) { animation-delay: 1.7s; }
+        
+        .ritual-item:nth-child(odd) {
+            padding-right: calc(50% + 30px);
+            text-align: right;
+        }
+        
+        .ritual-item:nth-child(even) {
+            padding-left: calc(50% + 30px);
+        }
+        
+        .ritual-time {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .ritual-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 15px;
+            border: 3px solid var(--secondary-color);
+            opacity: 0;
+        }
+        
+        .ritual-image.animated {
+            animation: zoomIn 0.5s ease-out forwards;
+        }
+        
+        .ritual-content {
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            opacity: 0;
+        }
+        
+        .ritual-content.animated {
+            animation: fadeInUp 0.5s ease-out 0.2s forwards;
+        }
+        
+        .ritual-content h3 {
+            margin-top: 0;
+        }
+        
+        /* Dietary Section */
+        .dietary-content {
+            display: flex;
+            align-items: center;
+            max-width: 800px;
+            margin: 0 auto;
+            gap: 30px;
+        }
+        
+        .dietary-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--secondary-color);
+            opacity: 0;
+        }
+        
+        .dietary-image.animated {
+            animation: zoomIn 0.5s ease-out forwards;
+        }
+        
+        .dietary-text {
+            flex: 1;
+            opacity: 0;
+        }
+        
+        .dietary-text.animated {
+            animation: fadeInUp 0.6s ease-out 0.2s forwards;
+        }
+        
+        .dietary-note {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(212, 175, 55, 0.1);
+            border-left: 4px solid var(--secondary-color);
+            border-radius: 5px;
+        }
+        
+        /* Livestream Section */
+        .livestream-content {
+            display: flex;
+            align-items: center;
+            max-width: 800px;
+            margin: 0 auto;
+            gap: 30px;
+        }
+        
+        .livestream-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--accent-color);
+            opacity: 0;
+        }
+        
+        .livestream-image.animated {
+            animation: zoomIn 0.5s ease-out forwards;
+        }
+        
+        .livestream-text {
+            flex: 1;
+            opacity: 0;
+        }
+        
+        .livestream-text.animated {
+            animation: fadeInUp 0.6s ease-out 0.2s forwards;
+        }
+        
+        .stream-link {
+            color: var(--accent-color);
+            font-weight: 600;
+            text-decoration: none;
+        }
+        
+        .stream-link:hover {
+            text-decoration: underline;
+        }
+        
+        .timezone {
+            font-style: italic;
+            color: #666;
+        }
+        
+        .stream-details {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(0, 128, 128, 0.1);
+            border-left: 4px solid var(--accent-color);
+            border-radius: 5px;
+        }
+        
+        /* Gallery Section */
+        .gallery-content {
+            text-align: center;
+        }
+        
+        .hashtag {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 30px 0;
+            opacity: 0;
+        }
+        
+        .hashtag.animated {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        
+        .social-icon {
+            background: var(--primary-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(15px);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .social-icon.animated {
+            animation: fadeInUp 0.4s ease-out forwards;
+        }
+        
+        .social-icon:nth-child(1) { animation-delay: 0.1s; }
+        .social-icon:nth-child(2) { animation-delay: 0.2s; }
+        .social-icon:nth-child(3) { animation-delay: 0.3s; }
+        .social-icon:nth-child(4) { animation-delay: 0.4s; }
+        
+        .social-icon:hover {
+            background: var(--accent-color);
+            transform: translateY(-3px);
+        }
+        
+        .social-icon-instagram {
+            background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
+        }
+        
+        .social-icon-facebook {
+            background: #3b5998;
+        }
+        
+        .social-icon-x {
+            background: black;
+        }
+        
+        .social-icon-tiktok {
+            background: linear-gradient(45deg, #ff0050, #ff0050, #ff0050, #00f2ea);
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 40px;
+        }
+        
+        .gallery-item {
+            height: 150px;
+            background: #ddd;
+            border-radius: 5px;
+            transition: transform 0.3s ease;
+            opacity: 0;
+        }
+        
+        .gallery-item.animated {
+            animation: zoomIn 0.4s ease-out forwards;
+        }
+        
+        .gallery-item:nth-child(1) { animation-delay: 0.1s; }
+        .gallery-item:nth-child(2) { animation-delay: 0.2s; }
+        .gallery-item:nth-child(3) { animation-delay: 0.3s; }
+        .gallery-item:nth-child(4) { animation-delay: 0.4s; }
+        .gallery-item:nth-child(5) { animation-delay: 0.5s; }
+        .gallery-item:nth-child(6) { animation-delay: 0.6s; }
+        
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Contact Section */
+        .contact-content {
+            text-align: center;
+            color: white;
+        }
+        
+        .contact-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--secondary-color);
+            margin: 0 auto 20px;
+            opacity: 0;
+        }
+        
+        .contact-image.animated {
+            animation: zoomIn 0.5s ease-out forwards;
+        }
+        
+        .couple-signature {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin: 20px 0;
+            opacity: 0;
+        }
+        
+        .couple-signature.animated {
+            animation: fadeInUp 0.6s ease-out 0.2s forwards;
+        }
+        
+        .contact-info {
+            margin-top: 30px;
+            opacity: 0;
+        }
+        
+        .contact-info.animated {
+            animation: fadeInUp 0.6s ease-out 0.3s forwards;
+        }
+        
+        .contact-info a {
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+        
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+        }
+        
+        .modal-overlay.animated {
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+        
+        .modal-container {
+            background: white;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transform: scale(0.9);
+        }
+        
+        .modal-container.animated {
+            animation: modalAppear 0.3s ease-out forwards;
+        }
+        
+        @keyframes modalAppear {
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .modal-header h3 {
+            margin: 0;
+            color: var(--primary-color);
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #999;
+        }
+        
+        .modal-close:hover {
+            color: #333;
+        }
+        
+        .modal-body {
+            padding: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(139, 0, 0, 0.2);
+        }
+        
+        .checkbox-group div {
+            margin-bottom: 8px;
+        }
+        
+        .checkbox-group input {
+            width: auto;
+            margin-right: 8px;
+        }
+        
+        .allergies-textarea {
+            margin-top: 10px;
+            display: none;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .btn-primary,
+        .btn-secondary {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: var(--accent-color);
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: #ccc;
+            color: #333;
+        }
+        
+        .btn-secondary:hover {
+            background: #bbb;
+        }
+        
+        .success-message {
+            text-align: center;
+            padding: 30px;
+        }
+        
+        .success-message h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        
+        /* Additional Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            .couple-names {
+                font-size: 3.5rem;
+            }
+            
+            .wedding-date {
+                font-size: 1.8rem;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .couple-names {
+                font-size: 3rem;
+            }
+            
+            .wedding-date {
+                font-size: 1.5rem;
+            }
+            
+            .dietary-content,
+            .livestream-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .dietary-image,
+            .livestream-image {
+                margin: 0 auto 20px;
+            }
+            
+            .ritual-item:nth-child(odd),
+            .ritual-item:nth-child(even) {
+                padding: 0;
+                text-align: center;
+            }
+            
+            .rituals-timeline:before {
+                left: 30px;
+            }
+            
+            .ritual-item {
+                padding-left: 60px !important;
+                text-align: left !important;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .wedding-hero {
+                padding: 100px 20px;
+            }
+            
+            .couple-names {
+                font-size: 2.5rem;
+            }
+            
+            .wedding-date {
+                font-size: 1.3rem;
+            }
+            
+            .wedding-section {
+                padding: 60px 0;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .events-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .social-icons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .form-actions button {
+                width: 100%;
+            }
+            
+            .carousel {
+                height: 80vh;
+            }
+            
+            .hashtag {
+                font-size: 1.5rem;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .couple-names {
+                font-size: 2rem;
+            }
+            
+            .wedding-date {
+                font-size: 1.1rem;
+            }
+            
+            .invitation-text {
+                font-size: 1.1rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .event-name {
+                font-size: 1.5rem;
+            }
+            
+            .rituals-timeline:before {
+                left: 20px;
+            }
+            
+            .ritual-item {
+                padding-left: 40px !important;
+            }
+            
+            .ritual-image {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .carousel-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+            
+            .carousel-btn.prev {
+                left: 10px;
+            }
+            
+            .carousel-btn.next {
+                right: 10px;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .couple-names {
+                font-size: 1.8rem;
+            }
+            
+            .wedding-date {
+                font-size: 1rem;
+            }
+            
+            .invitation-text {
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Animation -->
+    <div id="loading">
+        <div class="heart-loader">
+            <div class="heart-loader-inner"></div>
+        </div>
+        <div class="loading-text">Preparing Your Invitation...</div>
+    </div>
+    
+    <!-- Header/Hero Section -->
+    <header class="wedding-hero">
+        <div class="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item">
+                    <img src="images/Indian 1.jpg" alt="Wedding Image 1">
+                    <div class="carousel-overlay">
+                        <h1 class="couple-names">Priya & Raj</h1>
+                        <div class="wedding-date">December 15, 2025 • New Delhi</div>
+                        <p class="invitation-text">Together with our families, we invite you to witness the beginning of our journey as we unite in marriage.</p>
+                        <div class="scroll-down">
+                            <a href="#events">Scroll Down ↓</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="images/Indian 2.jpg" alt="Wedding Image 2">
+                    <div class="carousel-overlay">
+                        <h1 class="couple-names">Priya & Raj</h1>
+                        <div class="wedding-date">December 15, 2025 • New Delhi</div>
+                        <p class="invitation-text">Together with our families, we invite you to witness the beginning of our journey as we unite in marriage.</p>
+                        <div class="scroll-down">
+                            <a href="#events">Scroll Down ↓</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="images/indian 3.png" alt="Wedding Image 3">
+                    <div class="carousel-overlay">
+                        <h1 class="couple-names">Priya & Raj</h1>
+                        <div class="wedding-date">December 15, 2025 • New Delhi</div>
+                        <p class="invitation-text">Together with our families, we invite you to witness the beginning of our journey as we unite in marriage.</p>
+                        <div class="scroll-down">
+                            <a href="#events">Scroll Down ↓</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="images/Indian 6.png" alt="Wedding Image 4">
+                    <div class="carousel-overlay">
+                        <h1 class="couple-names">Priya & Raj</h1>
+                        <div class="wedding-date">December 15, 2025 • New Delhi</div>
+                        <p class="invitation-text">Together with our families, we invite you to witness the beginning of our journey as we unite in marriage.</p>
+                        <div class="scroll-down">
+                            <a href="#events">Scroll Down ↓</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="images/Indian 7.png" alt="Wedding Image 5">
+                    <div class="carousel-overlay">
+                        <h1 class="couple-names">Priya & Raj</h1>
+                        <div class="wedding-date">December 15, 2025 • New Delhi</div>
+                        <p class="invitation-text">Together with our families, we invite you to witness the beginning of our journey as we unite in marriage.</p>
+                        <div class="scroll-down">
+                            <a href="#events">Scroll Down ↓</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-btn prev">&#10094;</button>
+            <button class="carousel-btn next">&#10095;</button>
+            <div class="carousel-controls">
+                <div class="carousel-indicator active"></div>
+                <div class="carousel-indicator"></div>
+                <div class="carousel-indicator"></div>
+                <div class="carousel-indicator"></div>
+                <div class="carousel-indicator"></div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Events Section -->
+    <section id="events" class="wedding-section">
+        <div class="container">
+            <h2 class="section-title">Wedding Events</h2>
+            <div class="events-container">
+                <!-- Mehndi Event -->
+                <div class="event-card" data-event="mehndi">
+                    <img src="images/ndian 9.png" alt="Mehndi Ceremony" class="event-image">
+                    <div class="event-header">
+                        <h3 class="event-name">Mehndi Ceremony</h3>
+                        <div class="event-icon">🎨</div>
+                    </div>
+                    <div class="event-details">
+                        <p><strong>Date:</strong> December 13, 2025</p>
+                        <p><strong>Time:</strong> 4:00 PM - 7:00 PM</p>
+                        <p><strong>Venue:</strong> Gardenia Banquet Hall</p>
+                        <p><strong>Dress Code:</strong> Festive Indian wear</p>
+                    </div>
+                    <button class="rsvp-btn" data-event="mehndi">RSVP for Mehndi</button>
+                </div>
+                
+                <!-- Sangeet Event -->
+                <div class="event-card" data-event="sangeet">
+                    <img src="images/Indian 8.png" alt="Sangeet Night" class="event-image">
+                    <div class="event-header">
+                        <h3 class="event-name">Sangeet Night</h3>
+                        <div class="event-icon">🎶</div>
+                    </div>
+                    <div class="event-details">
+                        <p><strong>Date:</strong> December 14, 2025</p>
+                        <p><strong>Time:</strong> 7:00 PM - 10:00 PM</p>
+                        <p><strong>Venue:</strong> Grand Ballroom</p>
+                        <p><strong>Dress Code:</strong> Formal Indian wear</p>
+                    </div>
+                    <button class="rsvp-btn" data-event="sangeet">RSVP for Sangeet</button>
+                </div>
+                
+                <!-- Wedding Ceremony -->
+                <div class="event-card" data-event="ceremony">
+                    <img src="images/Indian 10.png" alt="Wedding Ceremony" class="event-image">
+                    <div class="event-header">
+                        <h3 class="event-name">Wedding Ceremony</h3>
+                        <div class="event-icon">💍</div>
+                    </div>
+                    <div class="event-details">
+                        <p><strong>Date:</strong> December 15, 2025</p>
+                        <p><strong>Time:</strong> 10:00 AM - 1:00 PM</p>
+                        <p><strong>Venue:</strong> Temple Gardens</p>
+                        <p><strong>Dress Code:</strong> Traditional Indian attire</p>
+                    </div>
+                    <button class="rsvp-btn" data-event="ceremony">RSVP for Ceremony</button>
+                </div>
+                
+                <!-- Reception Event -->
+                <div class="event-card" data-event="reception">
+                    <img src="images/Indian 11.jpg" alt="Reception" class="event-image">
+                    <div class="event-header">
+                        <h3 class="event-name">Reception</h3>
+                        <div class="event-icon">🥂</div>
+                    </div>
+                    <div class="event-details">
+                        <p><strong>Date:</strong> December 15, 2025</p>
+                        <p><strong>Time:</strong> 7:00 PM - 11:00 PM</p>
+                        <p><strong>Venue:</strong> Grand Ballroom</p>
+                        <p><strong>Dress Code:</strong> Cocktail/Party wear</p>
+                    </div>
+                    <button class="rsvp-btn" data-event="reception">RSVP for Reception</button>
+                </div>
+                
+                <!-- Haldi Event -->
+                <div class="event-card" data-event="haldi">
+                    <img src="images/Indian 1.jpg" alt="Haldi Ceremony" class="event-image">
+                    <div class="event-header">
+                        <h3 class="event-name">Haldi Ceremony</h3>
+                        <div class="event-icon">💛</div>
+                    </div>
+                    <div class="event-details">
+                        <p><strong>Date:</strong> December 12, 2025</p>
+                        <p><strong>Time:</strong> 10:00 AM - 12:00 PM</p>
+                        <p><strong>Venue:</strong> Gardenia Banquet Hall</p>
+                        <p><strong>Dress Code:</strong> Yellow/orange traditional wear</p>
+                    </div>
+                    <button class="rsvp-btn" data-event="haldi">RSVP for Haldi</button>
+                </div>
+                
+                <!-- Bridal Shower Event -->
+                <div class="event-card" data-event="bridal">
+                    <img src="images/indian 3.png" alt="Bridal Shower" class="event-image">
+                    <div class="event-header">
+                        <h3 class="event-name">Bridal Shower</h3>
+                        <div class="event-icon">💐</div>
+                    </div>
+                    <div class="event-details">
+                        <p><strong>Date:</strong> December 11, 2025</p>
+                        <p><strong>Time:</strong> 2:00 PM - 5:00 PM</p>
+                        <p><strong>Venue:</strong> Gardenia Banquet Hall</p>
+                        <p><strong>Dress Code:</strong> Festive casual wear</p>
+                    </div>
+                    <button class="rsvp-btn" data-event="bridal">RSVP for Bridal Shower</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Venue Information -->
+    <section id="venue" class="wedding-section">
+        <div class="container">
+            <h2 class="section-title">Venue Information</h2>
+            <div class="venue-tabs">
+                <button class="tab-btn active" data-tab="mehndi">Mehndi</button>
+                <button class="tab-btn" data-tab="sangeet">Sangeet</button>
+                <button class="tab-btn" data-tab="ceremony">Ceremony</button>
+                <button class="tab-btn" data-tab="reception">Reception</button>
+            </div>
+            
+            <div class="tab-content active" id="mehndi-tab">
+                <div class="venue-details">
+                    <h3>Gardenia Banquet Hall</h3>
+                    <p>123 Wedding Street, New Delhi</p>
+                    <div class="map-placeholder animated">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3502.090305555555!2d77.2299!3d28.7041!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfd5b0eb3f3bb%3A0x2a2a2a2a2a2a2a2a!2sNew%20Delhi!5e0!3m2!1sen!2sin!4v1677777777777!5m2!1sen!2sin" width="100%" height="300" style="border:0; border-radius: 10px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                    <div class="venue-info animated">
+                        <p><strong>Parking:</strong> Valet parking available</p>
+                        <p><strong>Transport:</strong> Shuttle service from hotels at 3:30 PM</p>
+                        <p><strong>Directions:</strong> Nearest metro station - Wedding Plaza</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="sangeet-tab">
+                <div class="venue-details">
+                    <h3>Grand Ballroom</h3>
+                    <p>456 Celebration Avenue, New Delhi</p>
+                    <div class="map-placeholder animated">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3502.090305555555!2d77.2299!3d28.7041!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfd5b0eb3f3bb%3A0x2a2a2a2a2a2a2a2a!2sNew%20Delhi!5e0!3m2!1sen!2sin!4v1677777777777!5m2!1sen!2sin" width="100%" height="300" style="border:0; border-radius: 10px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                    <div class="venue-info animated">
+                        <p><strong>Parking:</strong> Underground parking available</p>
+                        <p><strong>Transport:</strong> Complimentary shuttle from hotels</p>
+                        <p><strong>Directions:</strong> Located adjacent to Temple Gardens</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="ceremony-tab">
+                <div class="venue-details">
+                    <h3>Temple Gardens</h3>
+                    <p>789 Sacred Lane, New Delhi</p>
+                    <div class="map-placeholder animated">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3502.090305555555!2d77.2299!3d28.7041!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfd5b0eb3f3bb%3A0x2a2a2a2a2a2a2a2a!2sNew%20Delhi!5e0!3m2!1sen!2sin!4v1677777777777!5m2!1sen!2sin" width="100%" height="300" style="border:0; border-radius: 10px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                    <div class="venue-info animated">
+                        <p><strong>Parking:</strong> Limited street parking</p>
+                        <p><strong>Transport:</strong> Shuttle service from hotels at 9:00 AM</p>
+                        <p><strong>Directions:</strong> Enter through the main temple gate</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="reception-tab">
+                <div class="venue-details">
+                    <h3>Grand Ballroom</h3>
+                    <p>456 Celebration Avenue, New Delhi</p>
+                    <div class="map-placeholder" style="background-image: url('images/map2.jpg'); background-size: cover;">
+                        <p>Map of Grand Ballroom</p>
+                    </div>
+                    <div class="venue-info">
+                        <p><strong>Parking:</strong> Underground parking available</p>
+                        <p><strong>Transport:</strong> Complimentary shuttle from hotels</p>
+                        <p><strong>Directions:</strong> Located adjacent to Temple Gardens</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Rituals Section -->
+    <section id="rituals" class="wedding-section bg-light">
+        <div class="container">
+            <h2 class="section-title">Wedding Rituals</h2>
+            <p class="section-intro">A brief guide to the sacred ceremonies you'll witness</p>
+            
+            <div class="rituals-timeline">
+                <div class="ritual-item">
+                    <div class="ritual-time">9:00 AM</div>
+                    <div class="ritual-content">
+                        <img src="images/Indaian 4.png" alt="Ganesh Puja" class="ritual-image">
+                        <h3>Ganesh Puja</h3>
+                        <p>Invocation of Lord Ganesha to remove obstacles and bless the union</p>
+                    </div>
+                </div>
+                
+                <div class="ritual-item">
+                    <div class="ritual-time">9:30 AM</div>
+                    <div class="ritual-content">
+                        <img src="images/Indian 1.jpg" alt="Kanyadaan" class="ritual-image">
+                        <h3>Kanyadaan</h3>
+                        <p>Father giving away his daughter, symbolizing trust and respect</p>
+                    </div>
+                </div>
+                
+                <div class="ritual-item">
+                    <div class="ritual-time">10:00 AM</div>
+                    <div class="ritual-content">
+                        <img src="images/Indian 2.jpg" alt="Panigrahana" class="ritual-image">
+                        <h3>Panigrahana</h3>
+                        <p>Groom holds bride's hand, signifying their union</p>
+                    </div>
+                </div>
+                
+                <div class="ritual-item">
+                    <div class="ritual-time">10:30 AM</div>
+                    <div class="ritual-content">
+                        <img src="images/indian 3.png" alt="Saptapadi" class="ritual-image">
+                        <h3>Saptapadi</h3>
+                        <p>Seven vows around the sacred fire, each representing a promise</p>
+                    </div>
+                </div>
+                
+                <div class="ritual-item">
+                    <div class="ritual-time">11:30 AM</div>
+                    <div class="ritual-content">
+                        <img src="images/Indian 6.png" alt="Sindoor Daan" class="ritual-image">
+                        <h3>Sindoor Daan</h3>
+                        <p>Groom applies sindoor to bride's hair parting, marking her as married</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Dietary Info -->
+    <section id="dietary" class="wedding-section">
+        <div class="container">
+            <h2 class="section-title">Dietary Information</h2>
+            <div class="dietary-content">
+                <div>
+                    <img src="images/Indian 7.png" alt="Dietary Information" class="dietary-image">
+                </div>
+                <div class="dietary-text">
+                    <p>All meals served during the wedding will be <strong>pure vegetarian</strong> with no onion or garlic.</p>
+                    <p>We can accommodate special dietary requirements including vegan, gluten-free, and nut allergies. Please specify during RSVP.</p>
+                    <div class="dietary-note">
+                        <p><strong>Note:</strong> Meals will be served during the Sangeet (dinner) and Reception events.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Livestream Section -->
+    <section id="livestream" class="wedding-section bg-light">
+        <div class="container">
+            <h2 class="section-title">Livestream Access</h2>
+            <div class="livestream-content">
+                <div>
+                    <img src="images/ndian 9.png" alt="Livestream" class="livestream-image">
+                </div>
+                <div class="livestream-text">
+                    <p>Unable to join us in person? Watch the ceremony live!</p>
+                    <p><strong>Live Stream Link:</strong> <a href="#" class="stream-link">Watch Ceremony Live</a></p>
+                    <p class="timezone">Please note the time zone: IST (UTC+5:30)</p>
+                    <div class="stream-details">
+                        <p>The livestream will begin 15 minutes before the ceremony and include audio commentary to explain rituals.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Gallery Section -->
+    <section id="gallery" class="wedding-section">
+        <div class="container">
+            <h2 class="section-title">Share Your Moments</h2>
+            <div class="gallery-content">
+                <p>Capture and share your favorite moments with us!</p>
+                <div class="hashtag">#PriyaWedsRaj2025</div>
+                <div class="social-icons">
+                    <a href="#" class="social-icon social-icon-instagram">📸 Instagram</a>
+                    <a href="#" class="social-icon social-icon-facebook">📘 Facebook</a>
+                    <a href="#" class="social-icon social-icon-x">𝕏 X</a>
+                    <a href="#" class="social-icon social-icon-tiktok">🎵 TikTok</a>
+                </div>
+                <div class="gallery-grid">
+                    <div class="gallery-item" style="background-image: url('images/Indian 1.jpg'); background-size: cover;"></div>
+                    <div class="gallery-item" style="background-image: url('images/Indian 2.jpg'); background-size: cover;"></div>
+                    <div class="gallery-item" style="background-image: url('images/indian 3.png'); background-size: cover;"></div>
+                    <div class="gallery-item" style="background-image: url('images/Indian 6.png'); background-size: cover;"></div>
+                    <div class="gallery-item" style="background-image: url('images/Indian 7.png'); background-size: cover;"></div>
+                    <div class="gallery-item" style="background-image: url('images/Indian 8.png'); background-size: cover;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section id="contact" class="wedding-section bg-dark">
+        <div class="container">
+            <h2 class="section-title light">Questions?</h2>
+            <div class="contact-content">
+                <img src="images/Indian 8.png" alt="Couple" class="contact-image">
+                <p>With joy and gratitude,</p>
+                <p class="couple-signature">Priya & Raj</p>
+                <div class="contact-info">
+                    <p>Contact: <a href="mailto:info@priyawedsraj.com">info@priyawedsraj.com</a></p>
+                    <p>Phone: <a href="tel:+919876543210">+91 98765 43210</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <script>
+        // Carousel functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize carousel
+            const carouselInner = document.querySelector('.carousel-inner');
+            const indicators = document.querySelectorAll('.carousel-indicator');
+            const prevBtn = document.querySelector('.carousel-btn.prev');
+            const nextBtn = document.querySelector('.carousel-btn.next');
+            let currentIndex = 0;
+            const totalItems = 5;
+            
+            // Update carousel position
+            function updateCarousel() {
+                const offset = -currentIndex * 20; // 20% per slide (100% / 5)
+                carouselInner.style.transform = `translateX(${offset}%)`;
+                
+                // Update indicators
+                indicators.forEach((indicator, index) => {
+                    if (index === currentIndex) {
+                        indicator.classList.add('active');
+                    } else {
+                        indicator.classList.remove('active');
+                    }
+                });
+            }
+            
+            // Next slide
+            function nextSlide() {
+                currentIndex = (currentIndex + 1) % totalItems;
+                updateCarousel();
+            }
+            
+            // Previous slide
+            function prevSlide() {
+                currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+                updateCarousel();
+            }
+            
+            // Indicator click
+            indicators.forEach((indicator, index) => {
+                indicator.addEventListener('click', () => {
+                    currentIndex = index;
+                    updateCarousel();
+                });
+            });
+            
+            // Button events
+            nextBtn.addEventListener('click', nextSlide);
+            prevBtn.addEventListener('click', prevSlide);
+            
+            // Auto slide every 5 seconds
+            setInterval(nextSlide, 5000);
+            
+            // Handle loading animation
+            setTimeout(function() {
+                const loading = document.getElementById('loading');
+                const body = document.body;
+                
+                // Fade out loading animation
+                loading.style.opacity = '0';
+                
+                // Show body content after a short delay
+                setTimeout(function() {
+                    loading.style.display = 'none';
+                    body.style.display = 'block';
+                    
+                    // Animate hero section
+                    document.querySelector('.wedding-hero').style.animation = 'fadeIn 1s ease-out forwards';
+                    
+                    // Animate carousel items
+                    const carouselItems = document.querySelectorAll('.carousel-item');
+                    carouselItems.forEach(item => {
+                        const img = item.querySelector('img');
+                        const overlay = item.querySelector('.carousel-overlay');
+                        if (img) img.style.animation = 'fadeIn 1s ease-out forwards';
+                        if (overlay) overlay.style.animation = 'fadeIn 1s ease-out 0.5s forwards';
+                    });
+                }, 500);
+            }, 2000); // Show loading for 2 seconds
+            
+            // Intersection Observer for scroll animations
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Add animated class to trigger animations
+                        entry.target.classList.add('animated');
+                        
+                        // Also animate child elements
+                        const children = entry.target.querySelectorAll('*');
+                        children.forEach(child => {
+                            if (child.classList) {
+                                child.classList.add('animated');
+                            }
+                        });
+                        
+                        // Stop observing this element
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe all sections
+            const sections = document.querySelectorAll('.wedding-section, .section-title, .section-intro');
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+            
+            // Observe individual elements that need animation
+            const animatedElements = document.querySelectorAll(
+                '.event-card, .tab-btn, .map-placeholder, .ritual-item, .gallery-item, .social-icon, .dietary-image, .livestream-image, .contact-image, .couple-signature, .contact-info'
+            );
+            animatedElements.forEach(element => {
+                observer.observe(element);
+            });
+            
+            // Tab switching functionality
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Remove active class from all buttons and contents
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Show corresponding content
+                    const tabId = this.getAttribute('data-tab') + '-tab';
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+            
+            // RSVP Form Handling
+            const rsvpButtons = document.querySelectorAll('.rsvp-btn');
+            rsvpButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Get the event name and ID from the button's parent card
+                    const eventName = this.closest('.event-card').querySelector('.event-name').textContent;
+                    const eventId = this.getAttribute('data-event');
+                    
+                    // Create a modal for RSVP
+                    const modalHtml = `
+                        <div id="rsvp-modal" class="modal-overlay">
+                            <div class="modal-container">
+                                <div class="modal-header">
+                                    <h3>RSVP for ${eventName}</h3>
+                                    <button class="modal-close">&times;</button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="rsvp-form" class="rsvp-form">
+                                        <input type="hidden" id="event-id" value="${eventId}">
+                                        
+                                        <div class="form-group">
+                                            <label for="rsvp-name">Full Name *</label>
+                                            <input type="text" id="rsvp-name" required placeholder="Your full name">
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="rsvp-email">Email Address *</label>
+                                            <input type="email" id="rsvp-email" required placeholder="your.email@example.com">
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="rsvp-guests">Number of Guests</label>
+                                            <select id="rsvp-guests">
+                                                <option value="1">Just Me</option>
+                                                <option value="2">2 People</option>
+                                                <option value="3">3 People</option>
+                                                <option value="4">4 People</option>
+                                                <option value="5">5+ People</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label>Dietary Requirements</label>
+                                            <div class="checkbox-group">
+                                                <div>
+                                                    <input type="checkbox" id="veg-${eventId}" name="dietary" value="Vegetarian">
+                                                    <label for="veg-${eventId}">Vegetarian</label>
+                                                </div>
+                                                <div>
+                                                    <input type="checkbox" id="non-veg-${eventId}" name="dietary" value="Non-Vegetarian">
+                                                    <label for="non-veg-${eventId}">Non-Vegetarian</label>
+                                                </div>
+                                                <div>
+                                                    <input type="checkbox" id="vegan-${eventId}" name="dietary" value="Vegan">
+                                                    <label for="vegan-${eventId}">Vegan</label>
+                                                </div>
+                                                <div>
+                                                    <input type="checkbox" id="allergies-${eventId}" name="dietary" value="Allergies">
+                                                    <label for="allergies-${eventId}">Allergies (please specify)</label>
+                                                </div>
+                                            </div>
+                                            <textarea id="allergies-info-${eventId}" placeholder="Please specify any allergies" class="allergies-textarea"></textarea>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="rsvp-message">Special Message (Optional)</label>
+                                            <textarea id="rsvp-message" placeholder="Any special requests or messages for the couple?"></textarea>
+                                        </div>
+                                        
+                                        <div class="form-actions">
+                                            <button type="button" id="cancel-rsvp" class="btn-secondary">Cancel</button>
+                                            <button type="submit" class="btn-primary">Submit RSVP</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    document.body.insertAdjacentHTML('beforeend', modalHtml);
+                    
+                    // Animate modal entrance
+                    setTimeout(() => {
+                        const modal = document.getElementById('rsvp-modal');
+                        const modalContainer = modal.querySelector('.modal-container');
+                        modal.classList.add('animated');
+                        modalContainer.classList.add('animated');
+                    }, 10);
+                    
+                    // Hide allergies textarea initially
+                    document.querySelector(`#allergies-info-${eventId}`).style.display = 'none';
+                    
+                    // Show allergies textarea when checkbox is checked
+                    document.querySelector(`#allergies-${eventId}`).addEventListener('change', function() {
+                        const textarea = document.querySelector(`#allergies-info-${eventId}`);
+                        if(this.checked) {
+                            textarea.style.display = 'block';
+                        } else {
+                            textarea.style.display = 'none';
+                        }
+                    });
+                    
+                    // Handle form submission
+                    document.querySelector('#rsvp-form').addEventListener('submit', function(e) {
+                        e.preventDefault();
+                        
+                        const name = document.querySelector('#rsvp-name').value;
+                        const email = document.querySelector('#rsvp-email').value;
+                        
+                        if(name && email) {
+                            // Show success message
+                            document.querySelector('.modal-body').innerHTML = `
+                                <div class="success-message">
+                                    <h3>Thank You, ${name}!</h3>
+                                    <p>Your RSVP for <strong>${eventName}</strong> has been received.</p>
+                                    <p>We look forward to celebrating with you!</p>
+                                    <button id="close-modal" class="btn-primary">Close</button>
+                                </div>
+                            `;
+                        } else {
+                            alert('Please fill in all required fields.');
+                        }
+                    });
+                    
+                    // Handle cancel button and close button
+                    document.querySelector('#cancel-rsvp').addEventListener('click', function() {
+                        document.querySelector('#rsvp-modal').remove();
+                    });
+                    
+                    document.querySelector('.modal-close').addEventListener('click', function() {
+                        document.querySelector('#rsvp-modal').remove();
+                    });
+                    
+                    // Handle close button in success message
+                    document.addEventListener('click', function(e) {
+                        if(e.target.id === 'close-modal') {
+                            document.querySelector('#rsvp-modal').remove();
+                        }
+                    });
+                });
+            });
+            
+            // Close modal when clicking outside
+            document.addEventListener('click', function(e) {
+                if(e.target.classList.contains('modal-overlay')) {
+                    e.target.remove();
+                }
+            });
+            
+            // Close modal with Escape key
+            document.addEventListener('keyup', function(e) {
+                if(e.key === "Escape") {
+                    const modal = document.querySelector('#rsvp-modal');
+                    if(modal) {
+                        modal.remove();
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
