@@ -1,0 +1,110 @@
+@media (max-width:1200px){
+  .container{padding:0 15px}
+  .couple-names{font-size:3.5rem}
+  .wedding-date{font-size:1.8rem}
+}
+
+@media (max-width:992px){
+  .couple-names{font-size:3rem}
+  .wedding-date{font-size:1.5rem}
+
+  .dietary-content,.livestream-content{flex-direction:column;text-align:center}
+  .dietary-image,.livestream-image{margin:0 auto 20px}
+
+  .ritual-item:nth-child(odd),.ritual-item:nth-child(even){padding:0;text-align:center}
+  .rituals-timeline:before{left:30px}
+  .ritual-item{padding-left:60px !important;text-align:left !important}
+
+  .gallery-grid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr))}
+  
+  .header-nav .nav-links {
+    gap: 20px;
+  }
+  
+  .header-logo .couple-names-header {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width:768px){
+  .wedding-hero{padding:100px 20px}
+  .couple-names{font-size:2.5rem}
+  .wedding-date{font-size:1.3rem}
+
+  .wedding-section{padding:60px 0}
+  .section-title{font-size:2rem}
+
+  .events-container{grid-template-columns:1fr}
+  .social-icons{flex-direction:column;align-items:center}
+
+  .form-actions{flex-direction:column;gap:10px}
+  .form-actions button{width:100%}
+
+  .carousel{height:80vh}
+  .hashtag{font-size:1.5rem}
+  .gallery-grid{grid-template-columns:repeat(auto-fill,minmax(100px,1fr))}
+  
+  .header-nav .nav-links {
+    gap: 15px;
+  }
+  
+  .header-logo .couple-names-header {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width:576px){
+  .couple-names{font-size:2rem}
+  .wedding-date{font-size:1.1rem}
+  .invitation-text{font-size:1.1rem}
+  .section-title{font-size:1.8rem}
+  .event-name{font-size:1.5rem}
+
+  .rituals-timeline:before{left:20px}
+  .ritual-item{padding-left:40px !important}
+  .ritual-image{width:60px;height:60px}
+
+  .carousel-btn{width:40px;height:40px;font-size:1rem}
+  .carousel-btn.prev{left:10px}
+  .carousel-btn.next{right:10px}
+  
+  .header-nav .nav-links {
+    gap: 10px;
+  }
+  
+  .header-logo .couple-names-header {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width:480px){
+  .header-content {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .header-nav .nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+  
+  .header-nav .nav-links li a {
+    font-size: 0.9rem;
+  }
+  
+  .header-logo .couple-names-header {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width:400px){
+  .couple-names{font-size:1.8rem}
+  .wedding-date{font-size:1rem}
+  .invitation-text{font-size:1rem}
+  .section-title{font-size:1.5rem}
+  
+  .header-nav .nav-links li a {
+    font-size: 0.8rem;
+  }
+}

@@ -1,0 +1,147 @@
+.wedding-section{padding:100px 0;opacity:0;transform:translateY(30px)}
+.wedding-section.animated{animation:fadeInUp .8s ease-out forwards}
+
+.section-title{text-align:center;margin-bottom:50px;position:relative;font-size:2.5rem;opacity:0;transform:translateY(20px)}
+.section-title.animated{animation:fadeInUp .6s ease-out .2s forwards}
+.section-intro{text-align:center;max-width:700px;margin:-30px auto 50px;font-size:1.1rem;color:#666;opacity:0;transform:translateY(20px)}
+.section-intro.animated{animation:fadeInUp .6s ease-out .3s forwards}
+
+.bg-light{background:var(--light-gray)}
+.bg-dark{background:var(--dark-bg)}
+
+.events-container{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:30px}
+.event-card{
+  background:#fff;border-radius:10px;box-shadow:0 5px 15px rgba(0,0,0,.1);
+  padding:30px;transition:all .3s ease;border-top:5px solid var(--secondary-color);
+  position:relative;opacity:0;transform:translateY(20px)
+}
+.event-card.animated{animation:fadeInUp .6s ease-out forwards}
+.event-card:hover{transform:translateY(-10px);box-shadow:0 15px 30px rgba(0,0,0,.15)}
+
+.event-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.event-name{color:var(--primary-color);margin-bottom:0;font-size:1.8rem}
+.event-icon{font-size:2rem}
+.event-image{width:100%;height:150px;border-radius:8px;margin-bottom:20px;object-fit:cover;opacity:0}
+.event-image.animated{animation:fadeIn .5s ease-out forwards}
+.event-details{margin:25px 0}
+.event-details p{margin-bottom:10px}
+
+.rsvp-btn{
+  background:var(--primary-color);color:#fff;border:none;padding:12px 25px;border-radius:5px;
+  cursor:pointer;font-family:'Montserrat',sans-serif;font-weight:600;transition:all .3s ease;
+  display:block;width:100%;font-size:1.1rem
+}
+.rsvp-btn:hover{background:var(--accent-color);transform:scale(1.02)}
+
+.venue-tabs{display:flex;justify-content:center;margin-bottom:40px;flex-wrap:wrap}
+.tab-btn{
+  background:none;border:2px solid var(--primary-color);color:var(--primary-color);
+  padding:12px 25px;margin:5px;cursor:pointer;font-family:'Montserrat',sans-serif;
+  font-weight:600;transition:all .3s ease;opacity:0;transform:translateY(15px)
+}
+.tab-btn.animated{animation:fadeInUp .4s ease-out forwards}
+.tab-btn.active,.tab-btn:hover{background:var(--primary-color);color:#fff}
+
+.tab-content{display:none;opacity:0}
+.tab-content.active{display:block;animation:fadeIn .5s ease-out forwards}
+
+.venue-details{text-align:center}
+.map-placeholder{height:300px;border-radius:10px;overflow:hidden;margin:20px 0;opacity:0}
+.map-placeholder.animated{animation:fadeIn .6s ease-out forwards}
+.map-placeholder iframe{width:100%;height:100%;border:none}
+
+.venue-info{text-align:left;max-width:500px;margin:20px auto 0;opacity:0}
+.venue-info.animated{animation:fadeInUp .5s ease-out .2s forwards}
+.venue-info p{margin-bottom:10px}
+
+.rituals-timeline{max-width:800px;margin:0 auto;position:relative}
+.rituals-timeline:before{
+  content:'';position:absolute;top:0;bottom:0;width:4px;background:var(--secondary-color);
+  left:50%;margin-left:-2px;transform:scaleY(0);transform-origin:top
+}
+.rituals-timeline.animated:before{animation:growLine 2s ease-out forwards}
+@keyframes growLine{to{transform:scaleY(1)}}
+
+.ritual-item{margin-bottom:50px;position:relative;width:100%;opacity:0}
+.ritual-item.animated{animation:fadeIn .5s ease-out forwards}
+.ritual-item:nth-child(odd){padding-right:calc(50% + 30px);text-align:right}
+.ritual-item:nth-child(even){padding-left:calc(50% + 30px)}
+
+.ritual-time{font-weight:600;color:var(--primary-color);margin-bottom:10px}
+.ritual-image{width:80px;height:80px;border-radius:50%;object-fit:cover;margin:0 auto 15px;border:3px solid var(--secondary-color);opacity:0}
+.ritual-image.animated{animation:zoomIn .5s ease-out forwards}
+
+.ritual-content{padding:20px;background:var(--card-bg);border-radius:10px;box-shadow:0 3px 10px var(--shadow-color);opacity:0}
+
+[data-theme="dark"] .ritual-content{background:#000000}
+.ritual-content.animated{animation:fadeInUp .5s ease-out .2s forwards}
+
+.dietary-content,.livestream-content{display:flex;align-items:center;max-width:800px;margin:0 auto;gap:30px;background:var(--card-bg);padding:30px;border-radius:15px;box-shadow:0 5px 15px var(--shadow-color)}
+
+[data-theme="dark"] .dietary-content,[data-theme="dark"] .livestream-content{background:#000000}
+.dietary-image,.livestream-image{
+  width:100px;height:100px;border-radius:50%;object-fit:cover;opacity:0
+}
+.dietary-image{border:3px solid var(--secondary-color)}
+.livestream-image{border:3px solid var(--accent-color)}
+.dietary-image.animated,.livestream-image.animated{animation:zoomIn .5s ease-out forwards}
+
+.dietary-text,.livestream-text{flex:1;opacity:0}
+.dietary-text.animated,.livestream-text.animated{animation:fadeInUp .6s ease-out .2s forwards}
+
+.dietary-note{margin-top:20px;padding:15px;background:rgba(212,175,55,.15);border-left:4px solid var(--secondary-color);border-radius:5px}
+
+.stream-link{color:var(--accent-color);font-weight:600;text-decoration:none}
+.stream-link:hover{text-decoration:underline}
+.timezone{font-style:italic;color:#666}
+.stream-details{margin-top:20px;padding:15px;background:rgba(0,128,128,.15);border-left:4px solid var(--accent-color);border-radius:5px}
+
+.gallery-content{text-align:center}
+.hashtag{font-size:2rem;font-weight:700;color:var(--primary-color);margin:30px 0;opacity:0}
+.hashtag.animated{animation:fadeIn .6s ease-out forwards}
+
+.social-icons{display:flex;justify-content:center;gap:20px;margin:30px 0;flex-wrap:wrap}
+.social-icon{
+  background:var(--primary-color);color:#fff;padding:10px 20px;border-radius:30px;text-decoration:none;
+  transition:all .3s ease;opacity:0;transform:translateY(15px);display:flex;align-items:center;gap:8px
+}
+.social-icon.animated{animation:fadeInUp .4s ease-out forwards}
+.social-icon:hover{background:var(--accent-color);transform:translateY(-3px)}
+.social-icon-instagram{background:linear-gradient(45deg,#f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%)}
+.social-icon-facebook{background:#3b5998}
+.social-icon-x{background:#000}
+.social-icon-tiktok{background:linear-gradient(45deg,#ff0050,#ff0050,#ff0050,#00f2ea)}
+
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:15px;margin-top:40px}
+.gallery-item{height:150px;background:#ddd;border-radius:5px;transition:transform .3s ease;opacity:0}
+.gallery-item.animated{animation:zoomIn .4s ease-out forwards}
+.gallery-item:hover{transform:scale(1.05)}
+
+.contact-content{text-align:center;color:#fff}
+.contact-image{width:120px;height:120px;border-radius:50%;object-fit:cover;border:3px solid var(--secondary-color);margin:0 auto 20px;opacity:0}
+.contact-image.animated{animation:zoomIn .5s ease-out forwards}
+.couple-signature{font-family:'Playfair Display',serif;font-size:2.5rem;margin:20px 0;opacity:0;color:#fff}
+.couple-signature.animated{animation:fadeInUp .6s ease-out .2s forwards}
+.contact-info{margin-top:30px;opacity:0}
+.contact-info.animated{animation:fadeInUp .6s ease-out .3s forwards}
+.contact-info a{color:var(--secondary-color);text-decoration:none}
+.contact-info a:hover{text-decoration:underline}
+
+/* FAQ Styles */
+.faq-container{max-width:800px;margin:0 auto 40px}
+.faq-item{margin-bottom:15px;background:var(--card-bg);border-radius:10px;box-shadow:0 2px 10px var(--shadow-color);overflow:hidden;transition:all .3s ease}
+.faq-question{width:100%;background:rgba(139,0,0,.1);color:var(--primary-color);padding:20px;text-align:left;border:none;font-size:1.2rem;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:all .3s ease}
+.faq-question:hover{background:rgba(139,0,0,.2)}
+.faq-question i{transition:transform .3s ease}
+.faq-question.active i{transform:rotate(180deg)}
+.faq-answer{padding:0 20px;max-height:0;overflow:hidden;transition:max-height .3s ease;background:var(--card-bg)}
+.faq-answer.open{padding:20px;max-height:500px}
+.faq-answer p{margin:0;line-height:1.6;color:var(--text-color)}
+.still-questions{text-align:center;margin-top:40px;padding:30px;background:rgba(255,255,255,.1);border-radius:15px}
+.still-questions h3{color:var(--secondary-light);margin-bottom:20px}
+.still-questions p{margin-bottom:10px}
+.still-questions .couple-signature{font-size:2rem;margin:15px 0;color:var(--secondary-color)}
+.still-questions .contact-info{margin-top:20px}
+.still-questions .contact-info p{margin:10px 0}
+.still-questions .contact-info a{color:var(--secondary-color);text-decoration:none}
+.still-questions .contact-info a:hover{text-decoration:underline}

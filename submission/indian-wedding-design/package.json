@@ -1,0 +1,28 @@
+{
+  "name": "indian-wedding-invitation",
+  "version": "1.0.0",
+  "description": "A custom one-page Indian wedding invitation website",
+  "main": "index.js",
+  "files": [
+    "dist/",
+    "assets/",
+    "images/",
+    "partials/",
+    "build-static.js",
+    "vercel.json",
+    "netlify.toml"
+  ],
+  "scripts": {
+    "build": "node build-static.js",
+    "build:vercel": "node build-static.js",
+    "build:netlify": "node build-static.js"
+  },
+  "keywords": [
+    "wedding",
+    "invitation",
+    "indian",
+    "static-site"
+  ],
+  "author": "Ian Kibugu",
+  "license": "GPL-2.0"
+}
