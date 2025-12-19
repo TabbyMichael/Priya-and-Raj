@@ -72,7 +72,7 @@ async function buildStaticSite() {
     
     // Create _redirects file for Netlify SPA support
     try {
-      await fs.writeFile(path.join(__dirname, 'dist', '_redirects'), '/*    /index.html   200', 'utf8');
+      await fs.writeFile(path.join(__dirname, 'dist', '_redirects'), '/*    /index.html    200\n', 'utf8');
     } catch (error) {
       console.warn('Warning: Could not create _redirects file');
     }
