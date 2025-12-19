@@ -1,0 +1,17 @@
+<section id="dietary" class="wedding-section">
+    <div class="container">
+        <h2 class="section-title">Dietary Information</h2>
+        <div class="dietary-content">
+            <div>
+                <img src="<?php echo get_template_directory_uri(); ?>/images/Indian 7.png" alt="Dietary Information" class="dietary-image">
+            </div>
+            <div class="dietary-text">
+                <p>All meals served during the wedding will be <strong>pure vegetarian</strong> with no onion or garlic.</p>
+                <p>We can accommodate special dietary requirements including vegan, gluten-free, and nut allergies. Please specify during RSVP.</p>
+                <div class="dietary-note">
+                    <p><strong>Note:</strong> Meals will be served during the Sangeet (dinner) and Reception events.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

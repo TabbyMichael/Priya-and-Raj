@@ -1,0 +1,12 @@
+body {
+  background: $white;
+}
+
+.site-content {
+  min-height: 60vh;
+}
+
+#primary {
+  max-width: map-get($container-max-widths, lg);
+  margin: 0 auto;
+}

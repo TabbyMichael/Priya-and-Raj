@@ -1,0 +1,22 @@
+.screen-reader-text {
+  @include sr-only();
+}
+
+.screen-reader-text:focus {
+  @include sr-only-focusable();
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+}
+
+.skip-link:focus {
+  left: 1rem;
+  top: 1rem;
+  background: $white;
+  color: $dark;
+  padding: 0.5rem 1rem;
+  z-index: 9999;
+}

@@ -1,0 +1,24 @@
+.button,
+button,
+input[type="submit"],
+.wp-block-button__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: $btn-padding-y $btn-padding-x;
+  border-radius: $border-radius;
+  border: $btn-border-width solid $primary;
+  background: $primary;
+  color: color-contrast($primary);
+  font-family: $btn-font-family;
+  transition: $transition-base;
+}
+
+.button:hover,
+button:hover,
+input[type="submit"]:hover,
+.wp-block-button__link:hover {
+  background: $primary-dark;
+  border-color: $primary-dark;
+  color: color-contrast($primary-dark);
+}

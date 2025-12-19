@@ -1,0 +1,36 @@
+.main-navigation .primary-menu {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+}
+
+.main-navigation .primary-menu a {
+  color: $dark;
+}
+
+.menu-toggle {
+  display: none;
+}
+
+@include media-breakpoint-down(md) {
+  .menu-toggle {
+    display: inline-flex;
+  }
+
+  .main-navigation .primary-menu {
+    display: none;
+    flex-direction: column;
+    padding: 1rem;
+    background: $white;
+    position: absolute;
+    right: 1rem;
+    top: 100%;
+    box-shadow: $box-shadow;
+  }
+
+  .main-navigation .primary-menu.is-active {
+    display: flex;
+  }
+}

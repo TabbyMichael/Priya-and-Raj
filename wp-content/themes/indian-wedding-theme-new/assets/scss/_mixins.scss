@@ -1,0 +1,341 @@
+/**
+ * Mixins
+ * Reusable mixins for the theme
+ */
+
+@function breakpoint-infix($name, $breakpoints: $grid-breakpoints) {
+  @if $name == xs {
+    @return "";
+  }
+  @return "-#{$name}";
+}
+
+@function color-contrast($color, $dark-color: $dark, $light-color: $white) {
+  @if (lightness($color) > 55%) {
+    @return $dark-color;
+  }
+  @return $light-color;
+}
+
+// Media query manager
+//
+// @param {String} $breakpoint - Breakpoint name from $grid-breakpoints map
+// @content - Styles to be wrapped in the media query
+@mixin media-breakpoint-up($breakpoint, $breakpoints: $grid-breakpoints) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    $breakpoint-value: map-get($breakpoints, $breakpoint);
+    @media (min-width: $breakpoint-value) {
+      @content;
+    }
+  } @else {
+    @warn 'Invalid breakpoint: #{$breakpoint}.';
+  }
+}
+
+@mixin media-breakpoint-down($breakpoint, $breakpoints: $grid-breakpoints) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    $breakpoint-value: map-get($breakpoints, $breakpoint);
+    @media (max-width: ($breakpoint-value - 0.02px)) {
+      @content;
+    }
+  } @else {
+    @warn 'Invalid breakpoint: #{$breakpoint}.';
+  }
+}
+
+@mixin media-breakpoint-between($lower, $upper, $breakpoints: $grid-breakpoints) {
+  @if map-has-key($breakpoints, $lower) and map-has-key($breakpoints, $upper) {
+    $lower-breakpoint: map-get($breakpoints, $lower);
+    $upper-breakpoint: map-get($breakpoints, $upper) - 0.02px;
+    @media (min-width: $lower-breakpoint) and (max-width: $upper-breakpoint) {
+      @content;
+    }
+  } @else {
+    @if (map-has-key($breakpoints, $lower) == false) {
+      @warn 'Your lower breakpoint was invalid: #{$lower}.';
+    }
+    @if (map-has-key($breakpoints, $upper) == false) {
+      @warn 'Your upper breakpoint was invalid: #{$upper}.';
+    }
+  }
+}
+
+// Typography mixins
+@mixin text-truncate() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin text-ellipsis($lines: 2) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// Button variants
+@mixin button-variant($background, $color: color-contrast($background), $hover-background: darken($background, 7.5%), $hover-color: color-contrast($hover-background)) {
+  background-color: $background;
+  color: $color;
+  border-color: $background;
+
+  &:hover, 
+  &:focus {
+    background-color: $hover-background;
+    color: $hover-color;
+    border-color: $hover-background;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba($background, 0.5);
+  }
+
+  &:disabled,
+  &.disabled {
+    background-color: $background;
+    border-color: $background;
+    opacity: 0.65;
+  }
+}
+
+@mixin button-outline-variant($color, $hover-color: color-contrast($color)) {
+  color: $color;
+  border-color: $color;
+  background-color: transparent;
+
+  &:hover, 
+  &:focus {
+    background-color: $color;
+    color: $hover-color;
+    border-color: $color;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba($color, 0.5);
+  }
+
+  &:disabled,
+  &.disabled {
+    color: $color;
+    background-color: transparent;
+  }
+}
+
+// Form control variants
+@mixin form-control-variant($color, $background, $border) {
+  color: $color;
+  background-color: $background;
+  border-color: $border;
+
+  &:focus {
+    color: $color;
+    background-color: $background;
+    border-color: lighten($border, 25%);
+    box-shadow: 0 0 0 0.2rem rgba($border, 0.25);
+  }
+
+  &::placeholder {
+    color: rgba($color, 0.5);
+  }
+
+  &:disabled,
+  &[readonly] {
+    background-color: darken($background, 5%);
+    border-color: $border;
+  }
+}
+
+// Grid system
+@mixin make-container($gutter: $grid-gutter-width) {
+  width: 100%;
+  padding-right: $gutter / 2;
+  padding-left: $gutter / 2;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@mixin make-row($gutter: $grid-gutter-width) {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -$gutter / 2;
+  margin-left: -$gutter / 2;
+}
+
+@mixin make-col-ready($gutter: $grid-gutter-width) {
+  position: relative;
+  width: 100%;
+  padding-right: $gutter / 2;
+  padding-left: $gutter / 2;
+}
+
+@mixin make-col($size, $columns: $grid-columns) {
+  flex: 0 0 percentage($size / $columns);
+  max-width: percentage($size / $columns);
+}
+
+// Utilities
+@mixin sr-only() {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@mixin sr-only-focusable() {
+  &:active,
+  &:focus {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+}
+
+@mixin clearfix() {
+  &::after {
+    display: block;
+    content: "";
+    clear: both;
+  }
+}
+
+// Animations
+@mixin transition($properties...) {
+  @if length($properties) == 0 {
+    transition: $transition-base;
+  } @else {
+    transition: $properties $transition-base-duration $transition-base-timing;
+  }
+}
+
+@mixin hover-focus() {
+  &:hover, 
+  &:focus {
+    @content;
+  }
+}
+
+// Responsive utilities
+@mixin responsive-visibility($parent) {
+  #{$parent} {
+    display: block !important;
+  }
+  
+  table#{$parent} {
+    display: table !important;
+  }
+  
+  tr#{$parent} {
+    display: table-row !important;
+  }
+  
+  th#{$parent},
+  td#{$parent} {
+    display: table-cell !important;
+  }
+}
+
+@mixin responsive-invisibility($parent) {
+  #{$parent} {
+    display: none !important;
+  }
+}
+
+// Text overflow
+@mixin text-truncate() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Center block
+@mixin center-block() {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// Size mixin
+@mixin size($width, $height: $width) {
+  width: $width;
+  height: $height;
+}
+
+// Pseudo elements
+@mixin pseudo($display: block, $pos: absolute, $content: '') {
+  content: $content;
+  display: $display;
+  position: $pos;
+}
+
+// Truncate text after n lines
+@mixin truncate($lines) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+// Aspect ratio
+@mixin aspect-ratio($width, $height) {
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    display: block;
+    content: "";
+    width: 100%;
+    padding-top: ($height / $width) * 100%;
+  }
+  
+  > * {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+// Scrollbar styling
+@mixin scrollbar($size: 8px, $thumb: $gray-400, $track: $gray-100) {
+  &::-webkit-scrollbar {
+    width: $size;
+    height: $size;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: $track;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background-color: $thumb;
+    border-radius: $size / 2;
+    
+    &:hover {
+      background-color: darken($thumb, 10%);
+    }
+  }
+  
+  // Firefox
+  scrollbar-width: thin;
+  scrollbar-color: $thumb $track;
+}
+
+// Print styles
+@mixin print() {
+  @media print {
+    @content;
+  }
+}

@@ -1,0 +1,23 @@
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: $zindex-sticky;
+  background: $white;
+  box-shadow: $header-box-shadow;
+}
+
+.site-header__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.site-title {
+  margin: 0;
+  font-family: $font-family-heading;
+}
+
+.site-title a {
+  color: $dark;
+}

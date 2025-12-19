@@ -1,0 +1,42 @@
+/**
+ * Main SCSS file
+ * This file should only contain @import rules
+ */
+
+// Variables and Mixins
+@import 'variables';
+@import 'mixins';
+
+// Base styles
+@import 'base/normalize';
+@import 'base/typography';
+@import 'base/utilities';
+@import 'base/wordpress';
+
+// Layout
+@import 'layout/grid';
+@import 'layout/header';
+@import 'layout/footer';
+@import 'layout/sidebar';
+@import 'layout/forms';
+
+// Components
+@import 'components/buttons';
+@import 'components/cards';
+@import 'components/navigation';
+@import 'components/comments';
+@import 'components/widgets';
+
+// Pages
+@import 'pages/home';
+@import 'pages/blog';
+@import 'pages/single';
+@import 'pages/404';
+
+// Themes
+@import 'themes/theme';
+
+// Print styles
+@media print {
+  @import 'base/print';
+}

@@ -1,0 +1,16 @@
+input[type="text"],
+input[type="email"],
+input[type="url"],
+input[type="password"],
+textarea {
+  width: 100%;
+  padding: $input-padding-y $input-padding-x;
+  border: 1px solid $input-border-color;
+  border-radius: $input-border-radius;
+}
+
+button,
+input[type="submit"],
+input[type="button"] {
+  cursor: pointer;
+}
